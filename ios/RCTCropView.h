@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign) BOOL keepAspectRatio;
 @property (atomic, assign) BOOL iosDimensionSwapEnabled;
 @property (nonatomic, assign) CGSize cropAspectRatio;
+@property (nonatomic, assign) CGFloat cornerRadius; 
 @property (nonatomic, strong) RCTDirectEventBlock onImageSaved;
 
 - (UIImage *)getCroppedImage;

@@ -10,12 +10,11 @@
 #import <TOCropViewController/UIImage+CropRotate.h>
 #import <Photos/Photos.h>
 
-
 @implementation RCTCropView {
     TOCropView * _inlineCropView;
 }
 
-@synthesize sourceUrl, keepAspectRatio, cropAspectRatio, iosDimensionSwapEnabled;
+@synthesize sourceUrl, keepAspectRatio, cropAspectRatio, iosDimensionSwapEnabled, cornerRadius;
 
 - (void)layoutSubviews {
     if (_inlineCropView == nil) {
@@ -43,6 +42,11 @@
         }
         _inlineCropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _inlineCropView.frame = self.bounds;
+        
+        // Add rounded corners customization
+        _inlineCropView.cropRegionCornerRadius = 20.0f;  // You can adjust this value
+        _inlineCropView.cropViewCornerStyle = TOCropViewCornerStyleRounded;
+        
         if (self->keepAspectRatio) {
             _inlineCropView.aspectRatioLockEnabled = keepAspectRatio;
         }
@@ -98,6 +102,17 @@
 
 - (BOOL)iosDimensionSwapEnabled {
     return _inlineCropView.aspectRatioLockDimensionSwapEnabled;
+}
+
+- (void)setCornerRadius:(CGFloat)radius {
+    if (_inlineCropView) {
+        _inlineCropView.cropRegionCornerRadius = radius;
+    }
+    self->cornerRadius = radius;
+}
+
+- (CGFloat)cornerRadius {
+    return _inlineCropView.cropRegionCornerRadius;
 }
 
 - (void)rotateImage:(BOOL)clockwise {

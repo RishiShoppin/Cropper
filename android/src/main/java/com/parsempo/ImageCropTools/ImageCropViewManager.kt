@@ -25,10 +25,19 @@ class ImageCropViewManager: SimpleViewManager<CropImageView>() {
         const val ROTATE_IMAGE_COMMAND = 2
         const val SAVE_IMAGE_COMMAND_NAME = "saveImage"
         const val ROTATE_IMAGE_COMMAND_NAME = "rotateImage"
+        private const val CORNER_RADIUS_PROP = "cornerRadius"
     }
 
     override fun createViewInstance(reactContext: ThemedReactContext): CropImageView {
         val view =  CropImageView(reactContext)
+        view.cropOverlay.let { overlay ->
+            // Make corners rounded
+            overlay.cornerShape = CropImageView.CropCornerShape.OVAL
+            // Increase corner thickness if needed
+            overlay.cornerThickness = 5f
+            // Make corners larger if needed
+            overlay.cornerSize = 40f
+        }
         view.setOnCropImageCompleteListener { _, result ->
             if (result.isSuccessful) {
                 val map = Arguments.createMap()
@@ -106,5 +115,10 @@ class ImageCropViewManager: SimpleViewManager<CropImageView>() {
         }else {
             view.clearAspectRatio()
         }
+    }
+SAVE_IMAGE_COMMAND_NAM
+    @ReactProp(name = CORNER_RADIUS_PROP)
+    fun setCornerRadius(view: CropImageView, radius: Float) {
+        view.cropOverlay.cornerSize = radius
     }
 }
